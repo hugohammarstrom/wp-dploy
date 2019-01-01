@@ -9,6 +9,7 @@ export default {
             config = fs.readFileSync(path.resolve(process.cwd(), "./.dployrc.json"), {encoding: "UTF8"})
         } catch (error) {
             console.log(global.chalk.red("dploy: .dployrc.json file not found, run:"), global.chalk.white("\"wp-dploy init\""))
+            process.exit(1)
         }
 
         try {
@@ -16,6 +17,7 @@ export default {
         } catch (error) {
             console.log(global.chalk.red("dploy: .dployrc.json file not correct"))
             global.config = {}
+            process.exit(1)
         }
     }
 }
