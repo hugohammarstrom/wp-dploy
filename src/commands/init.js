@@ -17,12 +17,6 @@ export default function(){
         message: "Use wizard:",
         name: "use_wizard",
     },
-    /*{
-        type: "confirm",
-        message: "Use docker-compose file:",
-        name: "use_dockerfile",
-        when: (res) => res.use_wizard,
-    },*/
     {
         message: "Server host:",
         name: "host",
@@ -49,7 +43,6 @@ export default function(){
         when: (res) => res.use_wizard,
     }]).then((res) => {
         let json = {
-            "useDockerfile": true,
             "server": {
                 "host": "example.com",
                 "username": "root",
@@ -63,7 +56,6 @@ export default function(){
             }]
         }
         if (res.use_wizard){
-            //json.useDockerfile = res.use_dockerfile
             json.server.host = res.host
             json.server.username = res.username
             json.server.installation.path = res.install_path
@@ -77,18 +69,3 @@ export default function(){
         fs.writeFileSync(path.resolve(process.cwd(), "./.dployrc.json"), JSON.stringify(json, null, 4))
     })
 }
-
-
-// {
-//     "server": {
-//         "host": "torresta-alpha.tk",
-//         "username": "ubuntu",
-//         "installation": {
-//             "path": "/home/ubuntu/wp-docker/wp"
-//         }
-//     },
-//     "sites": [{
-//         "url": "http://alpha.local:8000",
-//         "local_url": "http://wordpress.localhost"
-//     }]
-// }

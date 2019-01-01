@@ -5,6 +5,11 @@ export default function(command, config={}){
     return new Promise((resolve, reject) => {
         let child = exec(command)
 
+        let result = {
+            error: "",
+            data: ""
+        }
+
         if (config.logging){
 
             child.stdout.on('data', (data) => {
@@ -12,15 +17,21 @@ export default function(command, config={}){
                 data.pop()
                 data.join("\n")
                 logger.info(`${data}`);
+                result.data += data
             });
         }
+
+        child.stderr.on("data", (error) => {
+            result.error += error
+        })
     
         child.on("exit", (code) => {
-            if(code != -1){
-                resolve()
+            if (code === 0 && !result.err){
+                resolve(result.data)
             } else {
-                console.log("Something went wrong")
-                process.exit(-1)
+                logger.error(global.chalk.red("dploy: something went wrong"), result.error)
+                logger.stop()
+                process.exit(1)
             }
         })
 
