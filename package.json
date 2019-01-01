@@ -6,7 +6,8 @@
   "scripts": {
     "build": "npx babel src --out-dir build",
     "global-install": "npm run build && sudo npm i -g",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 0",
+    "prepublish": "npm run build && npm test"
   },
   "author": "",
   "license": "ISC",
@@ -35,7 +36,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run build"
+      "pre-commit": "echo"
     }
   }
 }
