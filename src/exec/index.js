@@ -31,7 +31,6 @@ export default function(command, config={}){
             } else {
                 logger.error(global.chalk.red("dploy: something went wrong"), result.error)
                 logger.stop()
-                process.exit(1)
             }
         })
 
