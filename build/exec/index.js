@@ -22,7 +22,7 @@ function _default(command) {
         data.pop();
         data.join("\n");
 
-        _logger.default.log("".concat(data));
+        _logger.default.info("".concat(data));
       });
     }
 

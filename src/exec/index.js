@@ -10,7 +10,7 @@ export default function(command, config={}){
                 data = data.split("\n")
                 data.pop()
                 data.join("\n")
-                logger.log(`${data}`);
+                logger.info(`${data}`);
             });
         }
     

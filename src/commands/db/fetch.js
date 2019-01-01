@@ -10,7 +10,7 @@ export default async function(){
     let {config} = global
     logger.log(global.chalk.green("dploy: started db fetch"))
 
-    logger.log(global.chalk.yellow("dploy: fetching db"))
+    logger.info(global.chalk.yellow("dploy: fetching db"))
     await exec(`${cwd}/bin/fetch-db.sh ${process.cwd()} ${config.server.installation.path} ${config.server.username}@${config.server.host}`, {
         logging: true
     })
@@ -21,9 +21,17 @@ export default async function(){
     
     await Promise.all(config.sites.map(async (site) => {
         let localUrl = String(site.local_url.replace("http://", "").replace("https://", ""))
-        logger.log(global.chalk.yellow(`dploy: setting up site: ${localUrl}`))
+        let url = String(site.url.replace("http://", "").replace("https://", ""))
+        logger.info(global.chalk.yellow(`dploy: setting up site: ${localUrl}`))
 
-        await exec(`${cwd}/bin/search-replace.sh ${process.cwd()} ${site.url} ${site.local_url}`, {
+        setTimeout(() => logger.info(`dploy: search-replace http://${url}`), 500)
+        
+        await exec(`${cwd}/bin/search-replace.sh ${process.cwd()} http://${url} ${site.local_url}`, {
+            logging: false
+        })
+        
+        logger.info(`dploy: search-replace https://${url}`)
+        await exec(`${cwd}/bin/search-replace.sh ${process.cwd()} https://${site.url} ${site.local_url}`, {
             logging: false
         })
     

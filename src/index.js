@@ -15,7 +15,7 @@ if (!process.argv.slice(2).length) {
 global.initial_cwd = process.cwd()
 
 if (process.env.DEV){
-    process.chdir(path.resolve(process.cwd(), "../test2"))
+    process.chdir(path.resolve(process.cwd(), "../test"))
 } else {
     process.chdir(process.cwd())
 }
@@ -42,6 +42,7 @@ program
 program
     .command("db fetch")
     .alias("db-fetch")
+    .alias("fetch")
     .description("Fetch database from server and search and replace all configurated sites")
     .action(commands.db.fetch)
 

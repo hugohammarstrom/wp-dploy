@@ -23,7 +23,7 @@ if (!process.argv.slice(2).length) {
 global.initial_cwd = process.cwd();
 
 if (process.env.DEV) {
-  process.chdir(_path.default.resolve(process.cwd(), "../test2"));
+  process.chdir(_path.default.resolve(process.cwd(), "../test"));
 } else {
   process.chdir(process.cwd());
 }
@@ -36,6 +36,6 @@ _commander.default.command("stop").alias("down").description("Stop wordpress dev
 
 _commander.default.command("init").description("Initialize dploy config").action(_commands.default.init);
 
-_commander.default.command("db fetch").alias("db-fetch").description("Fetch database from server and search and replace all configurated sites").action(_commands.default.db.fetch);
+_commander.default.command("db fetch").alias("db-fetch").alias("fetch").description("Fetch database from server and search and replace all configurated sites").action(_commands.default.db.fetch);
 
 _commander.default.parse(process.argv);
