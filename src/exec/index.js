@@ -6,6 +6,7 @@ export default function(command, config={}){
         let child = exec(command)
 
         if (config.logging){
+
             child.stdout.on('data', (data) => {
                 data = data.split("\n")
                 data.pop()
@@ -22,5 +23,13 @@ export default function(command, config={}){
                 process.exit(-1)
             }
         })
+
+        if (config.stdout){
+            child.stdout.pipe(process.stdout)
+        }
+
+        if (config.stderr){
+            child.stderr.pipe(process.stderr)
+        }
     })
 }

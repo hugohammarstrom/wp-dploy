@@ -49,4 +49,10 @@ program
     .description("Fetch database from server and search and replace all configurated sites")
     .action(commands.db.fetch)
 
+program
+    .command("list")
+    .alias("ps")
+    .description("List all containers")
+    .action(commands.list)
+
 program.parse(process.argv)
