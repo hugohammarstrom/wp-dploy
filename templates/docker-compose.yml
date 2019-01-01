@@ -1,0 +1,40 @@
+version: '3.3'
+
+services:
+  db:
+    image: mysql:5.7
+    volumes:
+      - ./env/data/mysql:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: password
+
+  wordpress:
+    depends_on:
+      - db
+    image: wordpress:latest
+    ports:
+      - "80:80"
+    restart: always
+    volumes:
+      - ./:/var/www/html
+    links:
+      - db:mysql
+    environment:
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: password
+    depends_on:
+      - db
+  wpcli:
+    image: wordpress:cli
+    user: xfs
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - db
+      - wordpress
+    links:
+      - db:mysql
