@@ -20,30 +20,30 @@ export default async function(){
     
     
     await Promise.all(config.sites.map(async (site) => {
-        let localUrl = String(site.local_url.replace("http://", "").replace("https://", ""))
+        let local_url = String(site.local_url.replace("http://", "").replace("https://", ""))
         let url = String(site.url.replace("http://", "").replace("https://", ""))
-        logger.info(global.chalk.yellow(`dploy: setting up site: ${localUrl}`))
+        logger.info(global.chalk.yellow(`dploy: setting up site: ${local_url}`))
 
         setTimeout(() => logger.info(`dploy: search-replace http://${url}`), 500)
         
-        await exec(`${cwd}/bin/search-replace.sh ${process.cwd()} http://${url} ${site.local_url}`, {
+        await exec(`${cwd}/bin/search-replace.sh ${process.cwd()} http://${url} http://${local_url}`, {
             logging: false
         })
         
         logger.info(`dploy: search-replace https://${url}`)
-        await exec(`${cwd}/bin/search-replace.sh ${process.cwd()} https://${site.url} ${site.local_url}`, {
+        await exec(`${cwd}/bin/search-replace.sh ${process.cwd()} https://${site.url} http://${local_url}`, {
             logging: false
         })
     
-        hostile.set("127.0.0.1", localUrl, (err) => {
+        hostile.set("127.0.0.1", local_url, (err) => {
             if(err){
-                logger.error(`dploy: something went wrong when trying to add ${localUrl} to /etc/hosts`, err)
+                logger.error(`dploy: something went wrong when trying to add ${local_url} to /etc/hosts`, err)
             } else {
-                logger.success(global.chalk.yellow(`dploy: added ${localUrl} to /etc/hosts`))
+                logger.success(global.chalk.yellow(`dploy: added ${local_url} to /etc/hosts`))
             }
         })
     
-        logger.success(global.chalk.green(`dploy: site: ${localUrl} setup`))
+        logger.success(global.chalk.green(`dploy: site: ${local_url} setup`))
         return Promise.resolve()
     }))
     logger.stop()
