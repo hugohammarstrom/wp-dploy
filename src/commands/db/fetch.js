@@ -34,9 +34,8 @@ async function setupSites(sites, i = 0){
     let url = String(site.url.replace("http://", "").replace("https://", ""))
     logger.info(global.chalk.yellow(`dploy: setting up site: ${local_url}`))
 
-    setTimeout(() => logger.info(`dploy: search-replace http://${url}`), 500)
+    setTimeout(() => logger.info(`dploy: search-replace ${url}`), 500)
     
-    logger.info(`dploy: search-replace ${url}`)
     await exec(`${cwd}/bin/search-replace.sh ${process.cwd()} ${site.url} ${local_url}`, {
         logging: false
     })
