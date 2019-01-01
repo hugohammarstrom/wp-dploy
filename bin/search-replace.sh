@@ -9,4 +9,4 @@ wp() {
     docker-compose run --no-deps --rm wpcli "$@"
 }
 
-wp search-replace $siteurl $newurl
+wp search-replace $siteurl $newurl --all-tables --network

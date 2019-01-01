@@ -35,13 +35,13 @@ function _default() {
       when: (res) => res.use_wizard,
   },*/
   {
-    message: "Host:",
+    message: "Server host:",
     name: "host",
     when: function when(res) {
       return res.use_wizard;
     }
   }, {
-    message: "Username:",
+    message: "Server username:",
     name: "username",
     when: function when(res) {
       return res.use_wizard;

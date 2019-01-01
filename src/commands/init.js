@@ -24,12 +24,12 @@ export default function(){
         when: (res) => res.use_wizard,
     },*/
     {
-        message: "Host:",
+        message: "Server host:",
         name: "host",
         when: (res) => res.use_wizard,
     },
     {
-        message: "Username:",
+        message: "Server username:",
         name: "username",
         when: (res) => res.use_wizard,
     },

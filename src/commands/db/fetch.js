@@ -26,26 +26,35 @@ export default async function(){
 
         setTimeout(() => logger.info(`dploy: search-replace http://${url}`), 500)
         
-        await exec(`${cwd}/bin/search-replace.sh ${process.cwd()} http://${url} http://${local_url}`, {
+        logger.info(`dploy: search-replace ${url}`)
+        await exec(`${cwd}/bin/search-replace.sh ${process.cwd()} ${site.url} ${local_url}`, {
             logging: false
         })
+
+        logger.info(`dploy: search-replace https:// to http://`)
+        await exec(`${cwd}/bin/search-replace.sh ${process.cwd()} https://${local_url} http://${local_url}`, {
+            logging: false
+        })
+
         
-        logger.info(`dploy: search-replace https://${url}`)
-        await exec(`${cwd}/bin/search-replace.sh ${process.cwd()} https://${site.url} http://${local_url}`, {
-            logging: false
-        })
-    
-        hostile.set("127.0.0.1", local_url, (err) => {
-            if(err){
-                logger.error(`dploy: something went wrong when trying to add ${local_url} to /etc/hosts`, err)
-            } else {
-                logger.success(global.chalk.yellow(`dploy: added ${local_url} to /etc/hosts`))
-            }
-        })
+        if(global.isRoot){
+            hostile.set("127.0.0.1", local_url, (err) => {
+                if(err){
+                    logger.error(`dploy: something went wrong when trying to add ${local_url} to /etc/hosts`, err)
+                } else {
+                    logger.success(global.chalk.yellow(`dploy: added ${local_url} to /etc/hosts`))
+                }
+            })
+        }
     
         logger.success(global.chalk.green(`dploy: site: ${local_url} setup`))
         return Promise.resolve()
     }))
+
+    if (!global.isRoot){
+        logger.warning("dploy: wp-dploy was not executed with root privileges, skipping /etc/host management")
+    }
+
     logger.stop()
     process.exit(0)
 }

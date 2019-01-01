@@ -42,6 +42,20 @@ var functions = {
       functions.error(message, err);
     }
   },
+  warning: function warning(message) {
+    if (global.spinner) {
+      global.spinner.text = global.chalk.yellow(message);
+      global.spinner.stopAndPersist({
+        symbol: "⚠"
+      });
+      global.spinner.text = "";
+      global.spinner.start();
+      return;
+    } else {
+      functions.createSpinner();
+      functions.warning(message);
+    }
+  },
   log: function log(message) {
     if (global.spinner) {
       global.spinner.text = message;

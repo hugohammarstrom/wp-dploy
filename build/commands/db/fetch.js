@@ -57,46 +57,51 @@ function _ref() {
               var _ref2 = _asyncToGenerator(
               /*#__PURE__*/
               regeneratorRuntime.mark(function _callee(site) {
-                var localUrl, url;
+                var local_url, url;
                 return regeneratorRuntime.wrap(function _callee$(_context) {
                   while (1) {
                     switch (_context.prev = _context.next) {
                       case 0:
-                        localUrl = String(site.local_url.replace("http://", "").replace("https://", ""));
+                        local_url = String(site.local_url.replace("http://", "").replace("https://", ""));
                         url = String(site.url.replace("http://", "").replace("https://", ""));
 
-                        _logger.default.info(global.chalk.yellow("dploy: setting up site: ".concat(localUrl)));
+                        _logger.default.info(global.chalk.yellow("dploy: setting up site: ".concat(local_url)));
 
                         setTimeout(function () {
                           return _logger.default.info("dploy: search-replace http://".concat(url));
                         }, 500);
-                        _context.next = 6;
-                        return (0, _exec.default)("".concat(cwd, "/bin/search-replace.sh ").concat(process.cwd(), " http://").concat(url, " ").concat(site.local_url), {
+
+                        _logger.default.info("dploy: search-replace ".concat(url));
+
+                        _context.next = 7;
+                        return (0, _exec.default)("".concat(cwd, "/bin/search-replace.sh ").concat(process.cwd(), " ").concat(site.url, " ").concat(local_url), {
                           logging: false
                         });
 
-                      case 6:
-                        _logger.default.info("dploy: search-replace https://".concat(url));
+                      case 7:
+                        _logger.default.info("dploy: search-replace https:// to http://");
 
-                        _context.next = 9;
-                        return (0, _exec.default)("".concat(cwd, "/bin/search-replace.sh ").concat(process.cwd(), " https://").concat(site.url, " ").concat(site.local_url), {
+                        _context.next = 10;
+                        return (0, _exec.default)("".concat(cwd, "/bin/search-replace.sh ").concat(process.cwd(), " https://").concat(local_url, " http://").concat(local_url), {
                           logging: false
                         });
 
-                      case 9:
-                        _hostile.default.set("127.0.0.1", localUrl, function (err) {
-                          if (err) {
-                            _logger.default.error("dploy: something went wrong when trying to add ".concat(localUrl, " to /etc/hosts"), err);
-                          } else {
-                            _logger.default.success(global.chalk.yellow("dploy: added ".concat(localUrl, " to /etc/hosts")));
-                          }
-                        });
+                      case 10:
+                        if (global.isRoot) {
+                          _hostile.default.set("127.0.0.1", local_url, function (err) {
+                            if (err) {
+                              _logger.default.error("dploy: something went wrong when trying to add ".concat(local_url, " to /etc/hosts"), err);
+                            } else {
+                              _logger.default.success(global.chalk.yellow("dploy: added ".concat(local_url, " to /etc/hosts")));
+                            }
+                          });
+                        }
 
-                        _logger.default.success(global.chalk.green("dploy: site: ".concat(localUrl, " setup")));
+                        _logger.default.success(global.chalk.green("dploy: site: ".concat(local_url, " setup")));
 
                         return _context.abrupt("return", Promise.resolve());
 
-                      case 12:
+                      case 13:
                       case "end":
                         return _context.stop();
                     }
@@ -110,11 +115,15 @@ function _ref() {
             }()));
 
           case 9:
+            if (!global.isRoot) {
+              _logger.default.warning("dploy: wp-dploy was not executed with root privileges, skipping /etc/host management");
+            }
+
             _logger.default.stop();
 
             process.exit(0);
 
-          case 11:
+          case 12:
           case "end":
             return _context2.stop();
         }

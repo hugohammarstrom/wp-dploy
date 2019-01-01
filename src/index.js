@@ -4,9 +4,9 @@ import program from "commander"
 import commands from "./commands"
 import path from "path"
 import configHandler from "./handlers/config"
-import chalk from "chalk"
 
-global.chalk = chalk
+global.chalk = require("chalk")
+global.isRoot = require("is-root")()
 
 if (!process.argv.slice(2).length) {
     commands.base(program)
@@ -20,7 +20,11 @@ if (process.env.DEV){
     process.chdir(process.cwd())
 }
 
-configHandler.loadConfig()
+if (process.argv.slice(2)[0] !== "init"){
+    if (process.argv.slice(2).length) {
+        configHandler.loadConfig()
+    }
+}
 
 program
     .command("start")
@@ -40,9 +44,8 @@ program
     .action(commands.init)
 
 program
-    .command("db fetch")
+    .command("fetch")
     .alias("db-fetch")
-    .alias("fetch")
     .description("Fetch database from server and search and replace all configurated sites")
     .action(commands.db.fetch)
 
