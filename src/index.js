@@ -62,8 +62,8 @@ program
     .action(commands.list)
 
 program
-    .command("setup-dns")
-    .alias("setupDNS")
+    .command("dns")
+    .alias("setup-dns")
     .description("Setup dns for configured sites")
     .action(commands.setupDns)
 
