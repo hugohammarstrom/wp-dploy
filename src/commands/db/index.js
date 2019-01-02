@@ -1,3 +1,4 @@
 export default {
-    fetch: require("./fetch").default
+    pull: require("./pull").default,
+    update: require("./update").default
 }

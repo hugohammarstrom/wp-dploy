@@ -5,8 +5,10 @@ const functions = {
         global.spinner = ora(global.chalk.green(message || 'dploy')).start();
     },
     stop: function(){
-        global.spinner.stop()
-        global.spinner = undefined
+        if(global.spinner){
+            global.spinner.stop()
+            global.spinner = undefined
+        }
     },
     success: function(message){
         if(global.spinner){

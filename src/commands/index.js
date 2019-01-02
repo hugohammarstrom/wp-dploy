@@ -5,4 +5,5 @@ export default {
     stop: require("./stop").default,
     db: require("./db").default,
     list: require("./list").default,
+    setupDns: require("./setup-dns").default,
 }

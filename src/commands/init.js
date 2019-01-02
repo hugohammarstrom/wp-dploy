@@ -51,8 +51,8 @@ export default function(){
                 }
             },
             "sites": [{
-                "url": "http://example.com",
-                "local_url": "http://example.localhost"
+                "url": "example.com",
+                "local_url": "example.localhost"
             }]
         }
         if (res.use_wizard){
@@ -62,10 +62,8 @@ export default function(){
             json.sites[0].url = res.siteurl
             json.sites[0].local_url = res.local_siteurl
         }
-        if (json.useDockerfile){
-            fs.copyFileSync(`${cwd}/templates/docker-compose.yml`, path.resolve(process.cwd(), "./docker-compose.yml"))
-        }
-
+        
+        fs.copyFileSync(`${cwd}/templates/docker-compose.yml`, path.resolve(process.cwd(), "./docker-compose.yml"))
         fs.writeFileSync(path.resolve(process.cwd(), "./.dployrc.json"), JSON.stringify(json, null, 4))
     })
 }

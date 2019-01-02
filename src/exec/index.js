@@ -1,5 +1,6 @@
 import {exec} from "child_process"
 import logger from "./../logger"
+import { resolveCname } from "dns";
 
 export default function(command, config={}){
     return new Promise((resolve, reject) => {
@@ -7,11 +8,11 @@ export default function(command, config={}){
 
         let result = {
             error: "",
-            data: ""
+            data: "",
+            code: 0
         }
 
         if (config.logging){
-
             child.stdout.on('data', (data) => {
                 data = data.split("\n")
                 data.pop()
@@ -26,9 +27,11 @@ export default function(command, config={}){
         })
     
         child.on("exit", (code) => {
+            result.code = code
             if (code === 0 && !result.err){
-                resolve(result.data)
+                resolve(result)
             } else {
+                if (config.noExit) return resolve(result)
                 logger.error(global.chalk.red("dploy: something went wrong"), result.error)
                 logger.stop()
             }

@@ -44,15 +44,27 @@ program
     .action(commands.init)
 
 program
-    .command("fetch")
-    .alias("db-fetch")
-    .description("Fetch database from server and search and replace all configurated sites")
-    .action(commands.db.fetch)
+    .command("pull")
+    .alias("pull-db")
+    .description("Fetch database from server and setup all configured sites")
+    .action(commands.db.pull)
+
+program
+    .command("update")
+    .alias("update-sites")
+    .description("Update database with configured sites")
+    .action(commands.db.update)
 
 program
     .command("list")
     .alias("ps")
     .description("List all containers")
     .action(commands.list)
+
+program
+    .command("setup-dns")
+    .alias("setupDNS")
+    .description("Setup dns for configured sites")
+    .action(commands.setupDns)
 
 program.parse(process.argv)
