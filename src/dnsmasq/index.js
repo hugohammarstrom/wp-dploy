@@ -21,14 +21,14 @@ async function setup(sites){
     await exec(`docker-compose restart dnsmasq`)
     logger.success(global.chalk.green("dploy: setup up dns for configured sites"))
     
-    logger.info("dploy: checking if dns server is enabled")
+    logger.info("dploy: checking if dns server is configured correctly")
     await sleep(2500)
     
     let {code} = await exec(`nslookup ${sites[0].local_url.replace("http://", "").replace("https://", "")}`, {noExit: true})
     if (code != 0){
-        logger.warning("dploy: dns server not enabled, add 127.0.0.1 as a dns server to your wifi settings")
+        logger.warning("dploy: dns server is not configured correctly, add 127.0.0.1 as a dns server to your wifi settings")
     } else {
-        logger.success(global.chalk.green("dploy: dns server enabled"))
+        logger.success(global.chalk.green("dploy: dns server configured correctly"))
     }
 
     logger.stop()
