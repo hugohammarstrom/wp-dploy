@@ -2,13 +2,14 @@ import fs from "fs"
 import inquirer from "inquirer"
 import path from "path"
 import appRoot from "app-root-path"
+import logger from "./../logger"
 
 export default function(){
 
     let cwd = appRoot.toString()
 
     if (fs.existsSync(path.resolve(process.cwd(), "./.dployrc.json"))){
-        console.log(global.chalk.yellow("dploy: dploy already initialized"))
+        console.log(global.chalk.red("dploy: dploy already initialized"))
         return
     }
 
@@ -61,6 +62,8 @@ export default function(){
             json.server.installation.path = res.install_path
             json.sites[0].url = res.siteurl
             json.sites[0].local_url = res.local_siteurl
+        } else {
+            logger.warning("dploy: you need to change the placeholders in .dployrc.json before using wp-dploy")
         }
         
         fs.copyFileSync(`${cwd}/templates/docker-compose.yml`, path.resolve(process.cwd(), "./docker-compose.yml"))
@@ -82,6 +85,16 @@ export default function(){
 
         //ADD DNSMASQ CONFIG
         fs.copyFileSync(`${cwd}/templates/dnsmasq.conf`, path.resolve(process.cwd(), "./env/dnsmasq.conf"))
+
+        if(!fs.existsSync(path.resolve(process.cwd(), "./.gitignore"))){
+            fs.writeFileSync(path.resolve(process.cwd(), "./.gitignore"), "env")
+            logger.success(global.chalk.green("dploy: added .gitignore file"))
+        } else {
+            logger.warning("dploy: .gitignore already exist in this directory, skipping .gitignore management")
+        }
+
+        logger.success(global.chalk.green("dploy: initialized dploy project"))
+        logger.stop()
 
     })
 }
