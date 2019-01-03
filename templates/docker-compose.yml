@@ -2,6 +2,8 @@ version: '3.3'
 
 services:
   db:
+    labels:
+      wp-dploy: "true"
     image: mysql:5.7
     volumes:
       - ./env/data/mysql:/var/lib/mysql
@@ -13,6 +15,8 @@ services:
       MYSQL_PASSWORD: password
 
   wordpress:
+    labels:
+      wp-dploy: "true"
     depends_on:
       - db
     image: wordpress:latest
@@ -29,6 +33,8 @@ services:
     depends_on:
       - db
   wpcli:
+    labels:
+      wp-dploy: "true"
     image: wordpress:cli
     user: xfs
     volumes:
@@ -39,6 +45,8 @@ services:
     links:
       - db:mysql
   dnsmasq:
+    labels:
+      wp-dploy: "true"
     restart: always
     image: strm/dnsmasq
     command: --log-facility=-

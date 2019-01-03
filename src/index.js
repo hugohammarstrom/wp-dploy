@@ -35,6 +35,7 @@ program
 program
     .command("stop")
     .alias("down")
+    .option("-a, --all", "Stop all running wp-dploy managed containers")
     .description("Stop wordpress development environment")
     .action(commands.stop)
 
