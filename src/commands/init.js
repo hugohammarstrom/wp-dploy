@@ -65,5 +65,23 @@ export default function(){
         
         fs.copyFileSync(`${cwd}/templates/docker-compose.yml`, path.resolve(process.cwd(), "./docker-compose.yml"))
         fs.writeFileSync(path.resolve(process.cwd(), "./.dployrc.json"), JSON.stringify(json, null, 4))
+
+
+        //CREATE ENVIRONMENT FOLDERS
+        if (!fs.existsSync(path.resolve(process.cwd(), "./env"))){
+            fs.mkdirSync(path.resolve(process.cwd(), "./env"));
+        }
+
+        if (!fs.existsSync(path.resolve(process.cwd(), "./env/data"))){
+            fs.mkdirSync(path.resolve(process.cwd(), "./env/data"));
+        }
+
+        if (!fs.existsSync(path.resolve(process.cwd(), "./env/data/mysql"))){
+            fs.mkdirSync(path.resolve(process.cwd(), "./env/data/mysql"));
+        }
+
+        //ADD DNSMASQ CONFIG
+        fs.copyFileSync(`${cwd}/templates/dnsmasq.conf`, path.resolve(process.cwd(), "./env/dnsmasq.conf"))
+
     })
 }

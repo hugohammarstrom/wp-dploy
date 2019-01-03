@@ -2,8 +2,6 @@ import exec from "./../exec"
 import figlet from "figlet"
 export default async function(args){
     
-    
-
     figlet("containers", async (err, data) => {
         console.log(global.chalk.blue(data))
         console.log("")

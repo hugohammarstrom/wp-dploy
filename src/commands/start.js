@@ -1,9 +1,11 @@
 import compose from "../docker-compose"
 import path from "path"
 import logger from "./../logger"
+import configHandler from "./../handlers/config"
 
 
 export default function(a, b){
+    configHandler.loadConfig()
     logger.createSpinner("dploy: start local wordpress environment")
     compose.upAll({ cwd: path.join(process.cwd()), log: false })
         .then((res) => { 

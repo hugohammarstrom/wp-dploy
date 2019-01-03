@@ -14,6 +14,7 @@ export default {
 
         try {
             global.config = JSON.parse(config)
+            return global.config
         } catch (error) {
             console.log(global.chalk.red("dploy: .dployrc.json file not correct"))
             global.config = {}

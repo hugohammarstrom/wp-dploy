@@ -1,5 +1,7 @@
 import dnsmasq from "./../dnsmasq"
+import configHandler from "./../handlers/config"
+
 export default async function(){
-    let {config} = global
+    config = configHandler.loadConfig()
     await dnsmasq.setup(config.sites)
 }

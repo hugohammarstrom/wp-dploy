@@ -3,7 +3,6 @@ import "@babel/polyfill";
 import program from "commander"
 import commands from "./commands"
 import path from "path"
-import configHandler from "./handlers/config"
 
 global.chalk = require("chalk")
 global.isRoot = require("is-root")()
@@ -18,12 +17,6 @@ if (process.env.DEV){
     process.chdir(path.resolve(process.cwd(), "../test"))
 } else {
     process.chdir(process.cwd())
-}
-
-if (process.argv.slice(2)[0] !== "init"){
-    if (process.argv.slice(2).length) {
-        configHandler.loadConfig()
-    }
 }
 
 program
@@ -59,6 +52,7 @@ program
 program
     .command("list")
     .alias("ps")
+    .alias("ls")
     .description("List all containers")
     .action(commands.list)
 
