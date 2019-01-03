@@ -10,7 +10,6 @@ import configHandler from "./../../handlers/config"
 export default async function(){
     config = configHandler.loadConfig()
     await db.fetch(config)
-
     await db.update(config.sites)
     await dnsmasq.setup(config.sites)
 
