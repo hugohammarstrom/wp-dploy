@@ -1,6 +1,11 @@
 {
   "name": "@hugohammarstrom/wp-dploy",
-  "version": "0.0.4-5",
+  "version": "0.0.4-7",
+  "homepage": "https://github.com/hugohammarstrom/wp-dploy#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hugohammarstrom/wp-dploy.git"
+  },
   "description": "",
   "main": "index.js",
   "scripts": {
