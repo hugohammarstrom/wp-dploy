@@ -21,6 +21,8 @@ $ npm i -g @hugohammarstrom/wp-dploy
 
 Setup project to support wp-dploy:
 ```sh
+$ mkdir new-wp-project
+$ cd new-wp-project
 $ wp-dploy init
 ```
 
@@ -43,7 +45,7 @@ All commands that wp-dploy supports
 #### Init
 Init command used to initialize a dploy project
 ```
-wp-dploy init
+$ wp-dploy init
 ```
 Notes:
   - If you are not using the wizard to initialize the project you need to replace the placeholders in the .dplorc.json file
@@ -51,7 +53,7 @@ Notes:
 #### Start
 Start command used to start local invironment
 ```
-wp-dploy start | up
+$ wp-dploy start | up
 ```
 Notes:
   - Must be run in a directory that is initialized as a dploy project
@@ -59,7 +61,7 @@ Notes:
 #### Stop
 Stop command used to stop local invironment
 ```
-wp-dploy stop | down
+$ wp-dploy stop | down
 ```
 Options:
   - -a or --all If you want to stop containers that is not in the current directory
@@ -67,7 +69,7 @@ Options:
 #### Pull
 Fetch database from server and setup all configured sites
 ```
-wp-dploy pull | pull-db
+$ wp-dploy pull | pull-db
 ```
 Notes:
   - This command fetches the database from the configured server and sets up all configured sites
@@ -75,18 +77,18 @@ Notes:
 #### Update
 Update database with configured sites. The same as a pull but without fetching the database from the server
 ```
-wp-dploy update | update-sites
+$ wp-dploy update | update-sites
 ```
 #### List
 List all containers that is managed by wp-dploy
 ```
-wp-dploy list | ls
+$ wp-dploy list | ls
 ```
 
 #### Dns
 Setup dns for configured sites
 ```
-wp-dploy dns | setup-dns
+$ wp-dploy dns | setup-dns
 ```
 
 Notes:
