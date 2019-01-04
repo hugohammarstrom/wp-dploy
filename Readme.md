@@ -1,3 +1,5 @@
+![](assets/demo.gif)
+
 # WP-DPLOY
 [![npm version](https://badge.fury.io/js/%40hugohammarstrom%2Fwp-dploy.svg)](https://badge.fury.io/js/%40hugohammarstrom%2Fwp-dploy)
 

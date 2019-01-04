@@ -56,6 +56,7 @@ export default function(){
                 "local_url": "example.localhost"
             }]
         }
+        logger.info("dploy: initializing project")
         if (res.use_wizard){
             json.server.host = res.host
             json.server.username = res.username
@@ -63,7 +64,7 @@ export default function(){
             json.sites[0].url = res.siteurl
             json.sites[0].local_url = res.local_siteurl
         } else {
-            logger.warning("dploy: you need to change the placeholders in .dployrc.json before using wp-dploy")
+            logger.warning("dploy: you need to change the placeholders in .dployrc.json before using wp-dploy pull")
         }
         
         fs.copyFileSync(`${cwd}/templates/docker-compose.yml`, path.resolve(process.cwd(), "./docker-compose.yml"))
