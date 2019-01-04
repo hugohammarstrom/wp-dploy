@@ -2,20 +2,28 @@ import compose from "../docker-compose"
 import path from "path"
 import logger from "./../logger"
 import configHandler from "./../handlers/config"
+import dockerImagesHandler from "./../handlers/docker-images"
 import exec from "../exec";
 
 
 export default async function(a, b){
     configHandler.loadConfig()
+
+    logger.info(global.chalk.yellow("dploy: checking if images exists"))
+    let needsPull = await dockerImagesHandler.needsPull()
+    if (needsPull){
+        logger.warning("dploy: all images does not exist... pulling images")
+        logger.log("")
+        logger.stop()
     
-    console.log(global.chalk.yellow("dploy: pulling images"))
-    logger.log("")
-    logger.stop()
+        await exec("docker-compose pull --ignore-pull-failures", {stderr: true})
+    
+        logger.log("")
+        logger.success(global.chalk.green("dploy: pulled images"))
+    } else {
+        logger.success(global.chalk.green("dploy: images exists"))
+    }
 
-    await exec("docker-compose pull", {stderr: true})
-
-    logger.log("")
-    logger.success(global.chalk.green("dploy: pulled images"))
 
     setTimeout(() => logger.info(global.chalk.yellow("dploy: starting local wordpress environment")))
 
