@@ -3,13 +3,13 @@
 # WP-DPLOY
 [![npm version](https://badge.fury.io/js/%40hugohammarstrom%2Fwp-dploy.svg)](https://badge.fury.io/js/%40hugohammarstrom%2Fwp-dploy)
 
-Wp-dploy is a cli-tool that simplifies the setup of local wordpress development environments. 
+Wp-dploy is a cli-tool that simplifies the setup of local wordpress development environments.
 ![](assets/demo.gif)
 
 ### Prerequisites
-  - Node
-  - Docker
-  - Docker-compose
+  - [Node](https://nodejs.org/en/)
+  - [Docker](https://docs.docker.com/install/#supported-platforms)
+  - [Docker-compose](https://docs.docker.com/compose/install/)
 
 ### Getting started
 
@@ -94,7 +94,13 @@ $ wp-dploy dns | setup-dns
 Notes:
   - To use the wp-dploy dns you need to add 127.0.0.1 as a namserver in your network configurations, a tip is to add another dns to prevent the network from not working when the wp-dploy dns is stopped. eg: 8.8.8.8 and 8.8.4.4
 
-
+#### WP-cli
+wp-dploy adds a command to use the internal wp-cli in the docker containers:
+```
+$ docker-wp
+```
+Notes:
+  - This command needs to be executed inside the project directory
 
 
 ### Configuration file
