@@ -4,7 +4,7 @@
 [![npm version](https://badge.fury.io/js/%40hugohammarstrom%2Fwp-dploy.svg)](https://badge.fury.io/js/%40hugohammarstrom%2Fwp-dploy)
 
 Wp-dploy is a cli-tool that simplifies the setup of local wordpress development environments.
-![](assets/demo.gif)
+![](assets/demo2.gif)
 
 ### Prerequisites
   - [Node](https://nodejs.org/en/)
