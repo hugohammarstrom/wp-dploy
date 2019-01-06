@@ -126,11 +126,14 @@ Notes:
 ### Todos
 
  - Write Tests
+ - Explore the possibility to use recipes for database pulling. Eg via npm modules
+     - Variables in .dployrc.json that can be passed to the recipes
+     - Being able to specify which recipe to use in .dployrc.json
 
 License
 ----
 
-MIT
+MIT © [Hugo Hammarström](https://github.com/hugohammarstrom)
 
 
 **Free Software, Hell Yeah!**
