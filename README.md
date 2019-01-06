@@ -10,6 +10,9 @@ Wp-dploy is a cli-tool that simplifies the setup of local wordpress development 
   - [Node](https://nodejs.org/en/)
   - [Docker](https://docs.docker.com/install/#supported-platforms)
   - [Docker-compose](https://docs.docker.com/compose/install/)
+  
+  If using ```wp-dploy pull```:
+  - [WP-cli](https://wp-cli.org/) is required on the server
 
 ### Getting started
 
