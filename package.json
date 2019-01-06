@@ -15,7 +15,7 @@
     "prepublish": "npm run build && npm test"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
     "app-root-path": "^2.1.0",
