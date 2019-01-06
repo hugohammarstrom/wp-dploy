@@ -19,7 +19,7 @@ async function setup(sites){
     logger.info(global.chalk.yellow("dploy: saved dns config file"))
     setTimeout(() => logger.info(global.chalk.yellow("dploy: restarting dnsmasq")), 500)
     await exec(`docker-compose restart dnsmasq`)
-    logger.success(global.chalk.green("dploy: setup up dns for configured sites"))
+    logger.success(global.chalk.green("dploy: setup dns for configured sites"))
     
     logger.info("dploy: checking if dns server is configured correctly")
     await sleep(2500)
