@@ -20,7 +20,7 @@ const functions = {
             return
         } else {
             functions.createSpinner()
-            functions.succees(message)
+            functions.success(message)
         }
 
     },

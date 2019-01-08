@@ -4,6 +4,7 @@ import logger from "./../logger"
 import configHandler from "./../handlers/config"
 import dockerImagesHandler from "./../handlers/docker-images"
 import exec from "../exec";
+import dnsmasq from "./../dnsmasq"
 
 
 export default async function(a, b){
@@ -28,6 +29,7 @@ export default async function(a, b){
     setTimeout(() => logger.info(global.chalk.yellow("dploy: starting local wordpress environment")))
 
     let res = await compose.upAll({ cwd: path.join(process.cwd()), log: false })
+    await dnsmasq.setup(config.sites)
     
     if (res.err && res.code !== 0){
         logger.error("Something went wrong:", res.err)

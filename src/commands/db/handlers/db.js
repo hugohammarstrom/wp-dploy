@@ -11,11 +11,6 @@ export default {
 
 async function fetch(config){
 
-
-    logger.info("dploy: pulling wp-config.php from server")
-    await exec(`scp ${config.server.username}@${config.server.host}:${config.server.installation.path}/wp-config.php wp-config-server.php`)
-    logger.success(global.chalk.green("dploy: pulled wp-config.php from server"))
-
     logger.info(global.chalk.yellow("dploy: fetching db"))
 
 
