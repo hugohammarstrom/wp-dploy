@@ -6,7 +6,7 @@ services:
       wp-dploy: "true"
     image: mysql:5.7
     volumes:
-      - ./env/data/mysql:/var/lib/mysql
+      - ./env/data/mysql:/var/lib/mysql:delegated
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: password
@@ -24,7 +24,7 @@ services:
       - "80:80"
     restart: always
     volumes:
-      - ./:/var/www/html
+      - ./:/var/www/html:delegated
     links:
       - db:mysql
     environment:
@@ -38,7 +38,7 @@ services:
     image: wordpress:cli
     user: xfs
     volumes:
-      - ./:/var/www/html
+      - ./:/var/www/html:delegated
     depends_on:
       - db
       - wordpress

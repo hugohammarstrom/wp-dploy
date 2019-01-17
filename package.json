@@ -1,6 +1,6 @@
 {
   "name": "@hugohammarstrom/wp-dploy",
-  "version": "0.0.4-13",
+  "version": "0.0.4-16",
   "homepage": "https://github.com/hugohammarstrom/wp-dploy#readme",
   "repository": {
     "type": "git",
@@ -24,6 +24,7 @@
     "figlet": "^1.2.1",
     "inquirer": "^6.2.1",
     "is-root": "^2.0.0",
+    "latest-version": "^4.0.0",
     "ora": "^3.0.0",
     "simple-ssh": "^1.0.0"
   },
