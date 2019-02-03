@@ -1,8 +1,9 @@
 import ora from "ora"
+import chalk from "chalk"
 
 const functions = {
     createSpinner: function(message){
-        global.spinner = ora(global.chalk.green(message || 'dploy')).start();
+        global.spinner = ora(chalk.green(message || 'dploy')).start();
     },
     stop: function(){
         if(global.spinner){
@@ -41,7 +42,7 @@ const functions = {
     },
     warning: function(message){
         if(global.spinner){
-            global.spinner.text = global.chalk.yellow(message)
+            global.spinner.text = chalk.yellow(message)
             global.spinner.stopAndPersist({
                 symbol: "⚠"
             })

@@ -25,6 +25,7 @@ services:
     restart: always
     volumes:
       - ./:/var/www/html:delegated
+      - ./env/data/php/php.ini:/usr/local/etc/php/php.ini
     links:
       - db:mysql
     environment:

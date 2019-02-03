@@ -1,15 +1,16 @@
-import fs from "fs"
+import fs from "fs-extra"
 import inquirer from "inquirer"
 import path from "path"
 import appRoot from "app-root-path"
 import logger from "./../logger"
+import chalk from "chalk"
 
 export default function(){
 
     let cwd = appRoot.toString()
 
     if (fs.existsSync(path.resolve(process.cwd(), "./.dployrc.json"))){
-        console.log(global.chalk.red("dploy: dploy already initialized"))
+        console.log(chalk.red("dploy: dploy already initialized"))
         return
     }
 
@@ -66,8 +67,8 @@ export default function(){
         } else {
             logger.warning("dploy: you need to change the placeholders in .dployrc.json before using wp-dploy pull")
         }
-        
-        fs.copyFileSync(`${cwd}/templates/docker-compose.yml`, path.resolve(process.cwd(), "./docker-compose.yml"))
+
+        fs.copySync(`${cwd}/templates/docker-compose.yml`, path.resolve(process.cwd(), "./docker-compose.yml"))
         fs.writeFileSync(path.resolve(process.cwd(), "./.dployrc.json"), JSON.stringify(json, null, 4))
 
 
@@ -84,17 +85,24 @@ export default function(){
             fs.mkdirSync(path.resolve(process.cwd(), "./env/data/mysql"));
         }
 
+        if (!fs.existsSync(path.resolve(process.cwd(), "./env/data/php"))){
+            fs.mkdirSync(path.resolve(process.cwd(), "./env/data/php"));
+        }
+
         //ADD DNSMASQ CONFIG
-        fs.copyFileSync(`${cwd}/templates/dnsmasq.conf`, path.resolve(process.cwd(), "./env/dnsmasq.conf"))
+        fs.copySync(`${cwd}/templates/dnsmasq.conf`, path.resolve(process.cwd(), "./env/dnsmasq.conf"))
+
+        //ADD php.ini
+        fs.copySync(`${cwd}/templates/php.ini`, path.resolve(process.cwd(), "./env/data/php/php.ini"))
 
         if(!fs.existsSync(path.resolve(process.cwd(), "./.gitignore"))){
             fs.writeFileSync(path.resolve(process.cwd(), "./.gitignore"), "env")
-            logger.success(global.chalk.green("dploy: added .gitignore file"))
+            logger.success(chalk.green("dploy: added .gitignore file"))
         } else {
             logger.warning("dploy: .gitignore already exist in this directory, skipping .gitignore management")
         }
 
-        logger.success(global.chalk.green("dploy: initialized dploy project"))
+        logger.success(chalk.green("dploy: initialized dploy project"))
         logger.stop()
 
     })
