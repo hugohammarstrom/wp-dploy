@@ -5,20 +5,27 @@ import commands from "./commands"
 import path from "path"
 import versionHandler from "./handlers/version"
 import logger from "./logger"
+import config from "./handlers/config"
 
 global.chalk = require("chalk")
 global.isRoot = require("is-root")();
 
 
 (async () => {
-    logger.info("wp-dploy: checking for updates")
-    let latest = await versionHandler.hasUpdate()
-    if (latest){
-        logger.warning(`wp-dploy: wp-dploy is out of date, latest version is ${latest.version} and you have ${latest.current}. Run "npm update @hugohammarstrom/wp-dploy" to update`)
-    } else {
-        logger.success(`wp-dploy: is up to date`)
+
+
+    let lastCheck = await config.global.get("update.lastCheck", 0)
+    if (Date.now() - lastCheck > 86400 * 1000){
+        logger.info("wp-dploy: checking for updates")
+        let latest = await versionHandler.hasUpdate()
+        if (latest){
+            logger.warning(`wp-dploy: wp-dploy is out of date, latest version is ${latest.version} and you have ${latest.current}. Run "npm update @hugohammarstrom/wp-dploy" to update`)
+        } else {
+            logger.success(`wp-dploy: is up to date`)
+        }
+        await config.global.set("update.lastCheck", Date.now())
+        logger.stop()
     }
-    logger.stop()
 
 
     if (!process.argv.slice(2).length) {

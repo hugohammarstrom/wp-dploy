@@ -1,8 +1,10 @@
-import fs from "fs"
+import fs from "fs-extra"
 import path from "path"
+import _ from "lodash"
 
+const homedir = require('os').homedir()
 
-export default {
+const functions = {
     loadConfig: () => {
         let config;
         try {
@@ -20,5 +22,31 @@ export default {
             global.config = {}
             process.exit(1)
         }
+    },
+    global: {
+        get: async (key, defaultValue) => {
+            let dir = path.resolve(homedir, ".wpdploy/config.json")
+            await functions.global.ensure()
+            let json = await fs.readJSON(dir)
+            return _.get(json, key, defaultValue)
+        },
+        set: async (key, value) => {
+            let dir = path.resolve(homedir, ".wpdploy/config.json")
+            await functions.global.ensure()
+            let json = await fs.readJSON(dir)
+            json = _.set(json, key, value)
+            await fs.writeJSON(dir, json)
+            return
+        },
+        ensure: async () => {
+            let dir = path.resolve(homedir, ".wpdploy")
+            await fs.ensureDir(dir)
+            if (!await fs.exists(path.resolve(dir, "./config.json"))){
+                await fs.writeJSON(path.resolve(dir, "./config.json"), {})
+            }
+            return
+        }
     }
 }
+
+export default functions
