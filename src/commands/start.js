@@ -5,10 +5,33 @@ import configHandler from "./../handlers/config"
 import dockerImagesHandler from "./../handlers/docker-images"
 import exec from "../exec";
 import dnsmasq from "./../dnsmasq"
+import inquirer from "inquirer"
+import md5 from "md5"
 
+import config from "./../handlers/config"
 
 export default async function(a, b){
     configHandler.loadConfig()
+
+    
+
+    if (Array.isArray(global.config)){
+        let result = await inquirer.prompt([{
+            type: "list",
+            message: "Select installation to start",
+            name: "installation",
+            pageSize: 9,
+            choices: global.config.map((installation) => {
+                return installation.name
+            }),
+            filter: (_input) => {
+                let input = _input.split(": ")[0]
+                return Promise.resolve(input)
+            }
+        }])
+        console.log(config)
+        config.global.set(`installations[${md5(process.cwd())}].selected`, result.installation)
+    }
 
     logger.info(global.chalk.yellow("dploy: checking if images exists"))
     let needsPull = await dockerImagesHandler.needsPull()
