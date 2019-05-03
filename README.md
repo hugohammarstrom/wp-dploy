@@ -7,7 +7,7 @@ Wp-dploy is a cli-tool that simplifies the setup of local wordpress development 
 ![](assets/demo2.gif)
 
 ### Prerequisites
-  - [Node](https://nodejs.org/en/)
+  - [Node](https://nodejs.org/en/) tested with v10.7.0
   - [Docker](https://docs.docker.com/install/#supported-platforms)
   - [Docker-compose](https://docs.docker.com/compose/install/)
   
