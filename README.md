@@ -1,13 +1,13 @@
 
 
 # WP-DPLOY
-[![npm version](https://badge.fury.io/js/%40hugohammarstrom%2Fwp-dploy.svg)](https://badge.fury.io/js/%40hugohammarstrom%2Fwp-dploy)
+[![npm version](https://badge.fury.io/js/%40hugohammarstrom%2Fwp-dploy.svg)](https://badge.fury.io/js/%40hugohammarstrom%2Fwp-dploy) [![Coverage Status](https://coveralls.io/repos/github/hugohammarstrom/wp-dploy/badge.svg?branch=master)](https://coveralls.io/github/hugohammarstrom/wp-dploy?branch=master)
 
 Wp-dploy is a cli-tool that simplifies the setup of local wordpress development environments.
 ![](assets/demo2.gif)
 
 ### Prerequisites
-  - [Node](https://nodejs.org/en/)
+  - [Node](https://nodejs.org/en/) tested with v10.7.0
   - [Docker](https://docs.docker.com/install/#supported-platforms)
   - [Docker-compose](https://docs.docker.com/compose/install/)
   
