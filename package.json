@@ -1,6 +1,6 @@
 {
   "name": "@hugohammarstrom/wp-dploy",
-  "version": "0.0.4-16",
+  "version": "0.0.5-3",
   "homepage": "https://github.com/hugohammarstrom/wp-dploy#readme",
   "repository": {
     "type": "git",
@@ -10,7 +10,7 @@
   "main": "index.js",
   "scripts": {
     "build": "npx babel src --out-dir build",
-    "global-install": "npm run build && sudo npm i -g",
+    "global-install": "npm run build && npm i -g",
     "test": "jest",
     "prepublishOnly": "npm run build && npm test"
   },
@@ -19,6 +19,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.2.5",
     "app-root-path": "^2.1.0",
+    "boxen": "^2.1.0",
     "chalk": "^2.4.1",
     "commander": "^2.19.0",
     "figlet": "^1.2.1",
@@ -29,7 +30,8 @@
     "lodash": "^4.17.11",
     "md5": "^2.2.1",
     "ora": "^3.0.0",
-    "simple-ssh": "^1.0.0"
+    "simple-ssh": "^1.0.0",
+    "terminal-link": "^1.2.0"
   },
   "bin": {
     "wp-dploy": "./index.js",

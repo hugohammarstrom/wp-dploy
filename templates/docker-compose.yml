@@ -6,8 +6,10 @@ services:
       wp-dploy: "true"
     image: mysql:5.7
     volumes:
-      - ./env/data/mysql:/var/lib/mysql:delegated
+      - ${database_dir:-./env/data/mysql}:/var/lib/mysql:delegated
     restart: always
+    ports:
+      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: wordpress
@@ -19,12 +21,13 @@ services:
       wp-dploy: "true"
     depends_on:
       - db
-    image: wordpress:latest
+    image: wordpress:${wordpress_image:-latest}
     ports:
       - "80:80"
     restart: always
     volumes:
       - ./:/var/www/html:delegated
+      - ${uploads_dir:-./wp-content/uploads}:/var/www/html/wp-content/uploads:delegated
       - ./env/data/php/php.ini:/usr/local/etc/php/php.ini
     links:
       - db:mysql

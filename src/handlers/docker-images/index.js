@@ -1,10 +1,12 @@
 import fs from "fs"
 import exec from "./../../exec"
+import path from "path"
 
 export default {
     needsPull: function() {
         return new Promise(resolve => {
-            let config = fs.readFileSync("./docker-compose.yml", {encoding: "utf8"})
+            let config = fs.readFileSync(path.resolve("./docker-compose.yml"), {encoding: "utf8"})
+            
             let images = config.match(/image: {0,}\S{0,}\n/g).map(match => {
                 return match.replace("\n", "").replace(/image: {0,}/, "")
             })

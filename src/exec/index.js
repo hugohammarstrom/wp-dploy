@@ -1,7 +1,6 @@
 import {exec} from "child_process"
 import logger from "./../logger"
 import { resolveCname } from "dns";
-import { POINT_CONVERSION_COMPRESSED } from "constants";
 
 export default function(command, config={}){
     return new Promise((resolve, reject) => {
@@ -22,6 +21,13 @@ export default function(command, config={}){
                 result.data += data
             });
         }
+
+        child.stdout.on('data', (data) => {
+            data = data.split("\n")
+            data.pop()
+            data.join("\n")
+            result.data += data
+        });
 
         child.stderr.on("data", (error) => {
             result.error += error

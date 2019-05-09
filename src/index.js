@@ -43,6 +43,7 @@ global.isRoot = require("is-root")();
     program
         .command("start")
         .alias("up")
+        .option("-s, --stop", "Stop all running wp-dploy managed containers before starting")
         .description("Start wordpress development environment")
         .action(commands.start)
     

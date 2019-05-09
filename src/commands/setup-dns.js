@@ -1,7 +1,7 @@
 import dnsmasq from "./../dnsmasq"
-import configHandler from "./../handlers/config"
+import installationHandler from "./../handlers/installation"
 
 export default async function(){
-    config = configHandler.loadConfig()
+    config = await installationHandler.getSelected()
     await dnsmasq.setup(config.sites)
 }

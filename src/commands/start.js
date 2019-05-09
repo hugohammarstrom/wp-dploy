@@ -1,40 +1,34 @@
 import compose from "../docker-compose"
 import path from "path"
 import logger from "./../logger"
-import configHandler from "./../handlers/config"
 import dockerImagesHandler from "./../handlers/docker-images"
 import exec from "../exec";
 import dnsmasq from "./../dnsmasq"
-import inquirer from "inquirer"
-import md5 from "md5"
+import installationHandler from "./../handlers/installation"
+import wordpressHandler from "./../handlers/wordpress"
+import boxen from "boxen"
+import htaccessHandler from "./../handlers/htaccess"
 
-import config from "./../handlers/config"
+import terminalLink from 'terminal-link'
 
-export default async function(a, b){
-    configHandler.loadConfig()
+
+import stop from "./stop"
+
+export default async function(args){
+    let config = await installationHandler.getSelected()
 
     
-
-    if (Array.isArray(global.config)){
-        let result = await inquirer.prompt([{
-            type: "list",
-            message: "Select installation to start",
-            name: "installation",
-            pageSize: 9,
-            choices: global.config.map((installation) => {
-                return installation.name
-            }),
-            filter: (_input) => {
-                let input = _input.split(": ")[0]
-                return Promise.resolve(input)
-            }
-        }])
-        console.log(config)
-        config.global.set(`installations[${md5(process.cwd())}].selected`, result.installation)
+    if (args.stop){
+        let {data: ids} = await exec(`docker ps --filter "label=wp-dploy=true" --format "{{.ID}}"`)
+        if (ids != ""){
+            await stop({all: true})
+        }
     }
-
+    
     logger.info(global.chalk.yellow("dploy: checking if images exists"))
+
     let needsPull = await dockerImagesHandler.needsPull()
+
     if (needsPull){
         logger.warning("dploy: all images does not exist... pulling images")
         logger.log("")
@@ -50,9 +44,12 @@ export default async function(a, b){
 
 
     setTimeout(() => logger.info(global.chalk.yellow("dploy: starting local wordpress environment")))
+    let res = await exec(`database_dir=./env/data/mysql/${config.sites[0].url} uploads_dir=${config.uploadsDir || ""} wordpress_image="${config.wordpressImage || ""}" docker-compose up -d`)
 
-    let res = await compose.upAll({ cwd: path.join(process.cwd()), log: false })
+
     await dnsmasq.setup(config.sites)
+    await wordpressHandler.setConfig(config.config)
+    await htaccessHandler.setConfig(config)
     
     if (res.err && res.code !== 0){
         logger.error("Something went wrong:", res.err)
@@ -61,5 +58,8 @@ export default async function(a, b){
         logger.success(global.chalk.green('dploy: started local wordpress environment'))
         logger.stop()
         console.log(global.chalk.yellow("dploy: it can take a couple of minutes if this is the first launch"))
+        console.log("\n")
+        let link = "http://" + config.sites[0].local_url.replace("http://", "").replace("https://", "")
+        console.log(global.chalk.green(boxen(link, {padding: 1})));
     }
 }

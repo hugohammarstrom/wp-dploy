@@ -44,7 +44,11 @@ export default function(){
         name: "local_siteurl",
         when: (res) => res.use_wizard,
     }]).then((res) => {
-        let json = {
+        let json = [{
+            "name": "Example.com",
+            "uploadsDir": "./wp-content/uploads",
+            "config": "",
+            "wordpressImage": "latest",
             "server": {
                 "host": "example.com",
                 "username": "root",
@@ -56,14 +60,15 @@ export default function(){
                 "url": "example.com",
                 "local_url": "example.localhost"
             }]
-        }
+        }]
+
         logger.info("dploy: initializing project")
         if (res.use_wizard){
-            json.server.host = res.host
-            json.server.username = res.username
-            json.server.installation.path = res.install_path
-            json.sites[0].url = res.siteurl
-            json.sites[0].local_url = res.local_siteurl
+            json[0].server.host = res.host
+            json[0].server.username = res.username
+            json[0].server.installation.path = res.install_path
+            json[0].sites[0].url = res.siteurl
+            json[0].sites[0].local_url = res.local_siteurl
         } else {
             logger.warning("dploy: you need to change the placeholders in .dployrc.json before using wp-dploy pull")
         }

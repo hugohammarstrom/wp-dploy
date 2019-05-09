@@ -35,7 +35,9 @@ const functions = {
             await functions.global.ensure()
             let json = await fs.readJSON(dir)
             json = _.set(json, key, value)
-            await fs.writeJSON(dir, json)
+            await fs.writeJSON(dir, json, {
+                spaces: 4
+            })
             return
         },
         ensure: async () => {

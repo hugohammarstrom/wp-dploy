@@ -15,13 +15,14 @@ async function setup(sites){
     sites.forEach(site => {
         template += `address=/${site.local_url.replace("http://", "").replace("https://", "")}/127.0.0.1`
     });
+    
     fs.writeFileSync(process.cwd() + "/env/dnsmasq.conf", template)
     logger.info(global.chalk.yellow("dploy: saved dns config file"))
     setTimeout(() => logger.info(global.chalk.yellow("dploy: restarting dnsmasq")), 500)
     await exec(`docker-compose restart dnsmasq`)
     logger.success(global.chalk.green("dploy: setup dns for configured sites"))
     
-    logger.info("dploy: checking if dns server is configured correctly")
+    logger.info(global.chalk.yellow("dploy: checking if dns server is configured correctly"))
     await sleep(2500)
     
     let {code} = await exec(`nslookup ${sites[0].local_url.replace("http://", "").replace("https://", "")}`, {noExit: true})
