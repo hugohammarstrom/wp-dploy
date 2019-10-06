@@ -39,7 +39,7 @@ global.isRoot = require("is-root")();
     } else {
         process.chdir(process.cwd())
     }
-    
+
     program
         .command("start")
         .alias("up")
@@ -53,6 +53,14 @@ global.isRoot = require("is-root")();
         .option("-a, --all", "Stop all running wp-dploy managed containers")
         .description("Stop wordpress development environment")
         .action(commands.stop)
+
+    program
+        .command("deploy")
+        .description("Deploy tag to selected installations")
+        .option("-a, --all", "Deploy to all sites")
+        .option("-t, --tag <string>", "The tag to deploy")
+        .option("--sites <string>", "Comma separated string specifying all sites to deploy to")
+        .action(commands.deploy)
     
     program
         .command("init")

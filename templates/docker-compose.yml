@@ -34,6 +34,7 @@ services:
     environment:
       WORDPRESS_DB_USER: wordpress
       WORDPRESS_DB_PASSWORD: password
+      WP_ENV: development
     depends_on:
       - db
   wpcli:

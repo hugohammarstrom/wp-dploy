@@ -48,7 +48,7 @@ export default async function(args){
 
 
     await dnsmasq.setup(config.sites)
-    await wordpressHandler.setConfig(config.config)
+    await wordpressHandler.setConfig(config)
     await htaccessHandler.setConfig(config)
     
     if (res.err && res.code !== 0){

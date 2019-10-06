@@ -13,7 +13,7 @@ export default {
             let config = await fs.readFile(configDir, "utf8")
 
             if (site.production_url){
-                _config = `RewriteCond %{REQUEST_FILENAME} !-f\nRewriteCond %{REQUEST_URI} ^/wp-content/uploads/(.+) [NC]\nRewriteRule ^(.*\.(js|css|png|jpe?g|gif|ico)) http://${site.production_url.replace("https://", "").replace("http://", "")}/$1 [NC,R,L]\n`
+                _config = `RewriteCond %{REQUEST_FILENAME} !-f\nRewriteCond %{REQUEST_URI} ^/wp-content/uploads/(.+) [NC]\nRewriteRule ^(.*\.(js|css|png|jpe?g|gif|ico|svg)) http://${site.production_url.replace("https://", "").replace("http://", "")}/$1 [NC,R,L]\n`
             }
             
             config = config.replace(/# -- WP-DPLOY-START --[ ]{0,}(?:.*)# -- WP-DPLOY-END --[ ]{0,}/s, `# -- WP-DPLOY-START --\n# -- WP-DPLOY-END --`)

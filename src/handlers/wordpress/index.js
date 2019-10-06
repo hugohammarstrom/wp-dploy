@@ -4,8 +4,8 @@ import path from "path"
 import chalk from "chalk"
 
 export default {
-    setConfig: async (_config = "") => {
-        let configDir = path.resolve(process.cwd(), "./wp-config.php")
+    setConfig: async (_config = {}) => {
+        let configDir = path.resolve(process.cwd(), _config.wpConfig || "wp-config.php")
         if (await fs.exists(configDir)){
             logger.info(chalk.yellow("dploy: configuring wordpress"))
             let config = await fs.readFile(configDir, "utf8")
@@ -19,7 +19,7 @@ export default {
 
 /* -- WP-DPLOY-START -- */
 
-${_config}
+${_config.config || ""}
 
 /* -- WP-DPLOY-END -- */
             `

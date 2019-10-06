@@ -48,6 +48,8 @@ export default function(){
             "name": "Example.com",
             "uploadsDir": "./wp-content/uploads",
             "config": "",
+            "wpConfig": "wp-config.php",
+            "deployable": false,
             "wordpressImage": "latest",
             "server": {
                 "host": "example.com",
