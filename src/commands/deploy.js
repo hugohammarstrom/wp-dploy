@@ -47,7 +47,7 @@ export default async function(args) {
       logger.stop()
       await ssh_command({
         server: site.server,
-        command: `./wp-dploy-server deploy --site ${site.name} ${args.tag ? "--tag " + args.tag : ""}`
+        command: `wp-dploy-server deploy --site ${site.name} ${args.tag ? "--tag " + args.tag : ""}`
       })
     } else {
       logger.warning(`Skipping ${site.name}, no server config specified`);
