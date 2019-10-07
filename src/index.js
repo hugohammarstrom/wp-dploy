@@ -35,7 +35,7 @@ global.isRoot = require("is-root")();
     global.initial_cwd = process.cwd()
     
     if (process.env.DEV){
-        process.chdir(path.resolve(process.cwd(), "../test"))
+        process.chdir(path.resolve(process.cwd(), "../wp-dploy-test-installation"))
     } else {
         process.chdir(process.cwd())
     }
@@ -59,6 +59,7 @@ global.isRoot = require("is-root")();
         .description("Deploy tag to selected installations")
         .option("-a, --all", "Deploy to all sites")
         .option("-t, --tag <string>", "The tag to deploy")
+        .option("-b, --branch <branch>", "The branch to deploy from")
         .option("--sites <string>", "Comma separated string specifying all sites to deploy to")
         .action(commands.deploy)
     

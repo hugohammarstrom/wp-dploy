@@ -3,13 +3,41 @@ import configHandler from "../handlers/config";
 import { exec } from "child_process";
 import chalk from "chalk"
 import Confirm from "prompt-confirm"
-const { MultiSelect } = require('enquirer');
+const { MultiSelect, Select } = require('enquirer');
+
+import simpleGit from "simple-git/promise"
 
 export default async function(args) {
-  if (!args.tag) {
-    logger.warning("No tag specified, using latest...")
+  let git = simpleGit(process.cwd())
+  let branch = args.branch || (await git.branchLocal()).current
+
+  if (await git.diff()){
+    logger.warning("There are uncommited changes in the git repository")
     logger.stop()
   }
+
+  if (!args.tag) {
+    let commits = (await git.log([branch])).all
+    commits = commits.first(15)
+    
+    let unpushedCommits;
+    if ((await git.getRemotes()).find(remote => remote.name === "origin")){
+      unpushedCommits = (await git.log({from: "origin/master", to: "master"})).all
+    }
+
+    const commitPrompt = new Select({
+      name: 'color',
+      message: 'Select commit to deploy',
+      choices: commits.map(commit => {
+        let pushed = !unpushedCommits.find(_commit => _commit.hash === commit.hash)
+        return {message: `${pushed ? "" : "| " + chalk.red("not pushed to origin ")}| ${commit.author_name} - ${commit.message}`, value: commit.hash, enabled: false}
+      })
+    });
+
+    args.tag = await commitPrompt.run()
+  }
+  
+
   let sites = configHandler.loadConfig();
   sites = sites.filter(site => !site.disabled && site.deployable);
   if (!args.all){
@@ -100,3 +128,8 @@ const ssh_command = async function({ server={}, command }) {
     // child.stderr.pipe(process.stderr)
   });
 };
+
+
+Array.prototype.first = function(num){
+  return this.splice(0, num)
+}
