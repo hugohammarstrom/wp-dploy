@@ -1,5 +1,3 @@
-import compose from "../docker-compose"
-import path from "path"
 import logger from "./../logger"
 import dockerImagesHandler from "./../handlers/docker-images"
 import exec from "../exec";
@@ -8,8 +6,6 @@ import installationHandler from "./../handlers/installation"
 import wordpressHandler from "./../handlers/wordpress"
 import boxen from "boxen"
 import htaccessHandler from "./../handlers/htaccess"
-
-import terminalLink from 'terminal-link'
 
 
 import stop from "./stop"

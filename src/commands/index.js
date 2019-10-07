@@ -4,7 +4,5 @@ export default {
     start: require("./start").default,
     deploy: require("./deploy").default,
     stop: require("./stop").default,
-    db: require("./db").default,
     list: require("./list").default,
-    setupDns: require("./setup-dns").default,
 }

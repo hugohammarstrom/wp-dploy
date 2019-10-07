@@ -69,29 +69,11 @@ global.isRoot = require("is-root")();
         .action(commands.init)
     
     program
-        .command("pull")
-        .alias("pull-db")
-        .description("Fetch database from server and setup all configured sites")
-        .action(commands.db.pull)
-    
-    program
-        .command("update")
-        .alias("update-sites")
-        .description("Update database with configured sites")
-        .action(commands.db.update)
-    
-    program
         .command("list")
         .alias("ps")
         .alias("ls")
         .description("List all containers")
         .action(commands.list)
-    
-    program
-        .command("dns")
-        .alias("setup-dns")
-        .description("Setup dns for configured sites")
-        .action(commands.setupDns)
     
     program.parse(process.argv)
     
