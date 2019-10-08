@@ -104,14 +104,14 @@ const ssh_command = async function({ server={}, command }) {
       result.data += data
     });
 
-    child.stderr.on("data", error => {
+    child.stderr.on("data", data => {
       data = data.split("\n")
       for (let i = 0; i < data.length; i++) {
         if(data[i].trim()){
           console.log(`${chalk.red(server.host)}: ${data[i]}`)
         }
       }
-      result.error += error;
+      result.error += data;
     });
 
     child.on("exit", code => {
