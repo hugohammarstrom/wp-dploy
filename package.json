@@ -32,7 +32,7 @@
     "md5": "^2.2.1",
     "ora": "^3.0.0",
     "prompt-confirm": "^2.0.4",
-    "simple-git": "^1.126.0",
+    "simple-git": "^3.3.0",
     "simple-ssh": "^1.0.0",
     "terminal-link": "^1.2.0"
   },
